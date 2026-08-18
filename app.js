@@ -4,7 +4,7 @@
 
 // Sem vlož URL Web Appky z Apps Scriptu (Deploy -> New deployment -> Web app),
 // musí končit na /exec. Viz README.md.
-const APPS_SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzRhjR1nXjXWpbNvWWHzoctCRtiFwiCI0ABieGAIQW2VFTqWx5W9eZQZ7Mjij8sSog-Ig/exec";
 
 /* ---------- Generovaná grafika brka v hero sekci ---------- */
 
