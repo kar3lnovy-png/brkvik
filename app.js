@@ -5,7 +5,7 @@
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzRhjR1nXjXWpbNvWWHzoctCRtiFwiCI0ABieGAIQW2VFTqWx5W9eZQZ7Mjij8sSog-Ig/exec";
 
 // Datum, ke kterému se počítá dovršení 16 let (uprav podle termínu akce)
-const FESTIVAL_START_DATE = new Date("2027-28-05");
+const FESTIVAL_START_DATE = new Date("2027-05-28");
 
 /* ---------- Pomocné funkce ---------- */
 
