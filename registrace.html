@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#440F19">
+<title>Registrace — BRKVIK 2027</title>
+<meta name="description" content="Registrace na brněnský skautský festival Brkvík 2027 (16+) a vyhledání uložené přihlášky.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index.html" class="brand-lockup" aria-label="BRKVIK 2027 — Domů">
+      <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="48" fill="#B7D2FD" stroke="#440F19" stroke-width="3"/>
+        <path d="M20 57 L26 34 L35 33 L39 32 L56 31 L64 21 L70 21 L80 19 L76 22 L80 23 L76 25 L77 33 L74 35 L71 34 L71 30 L69 27 L66 40 L65 81 L61 78 L62 46 L60 46 L59 82 L55 79 L56 46 L48 47 L45 56 L39 60 L39 80 L34 83 L35 58 L41 53 L43 46 L39 46 L38 54 L32 59 L32 82 L27 85 L28 57 L34 52 L35 35 L29 36 L26 53 Z" fill="#F4380A"/>
+        <path d="M39 22 C37 16 45 15 47 18 C48 19 44 20 44 21 L62 23 L63 22 L63 25 L60 27 L47 25 C46 26 47 28 48 29 L56 31 L45 32 L46 39 L40 48 L39 50 L37 45 L42 38 L42 32 L38 26 L39 33 L37 35 L35 33 L37 31 L35 24 L39 22 Z" fill="#440F19"/>
+      </svg>
+      <div class="brand-text">
+        <span class="brand-title">BRKVIK</span>
+        <span class="brand-year">2027</span>
+      </div>
+    </a>
+    <a href="registrace.html" class="mobile-quick-cta">Registrace</a>
+  </div>
+
+  <nav class="site-nav" aria-label="Hlavní navigace">
+    <a href="index.html"><span class="nav-num">01</span> Úvod</a>
+    <a href="program.html"><span class="nav-num">02</span> Program</a>
+    <a href="info.html"><span class="nav-num">03</span> Info</a>
+    <a href="registrace.html" class="nav-cta is-current"><span class="nav-num">04</span> Registrace</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section id="ucet" class="swiss-section theme-dark">
+    <div class="section-sidebar">
+      <div class="sidebar-top">
+        <span class="section-num">04</span>
+        <h2 class="section-heading">REGISTRACE</h2>
+      </div>
+      <p class="sidebar-note">
+        Festival je určen pro účastníky <strong>16+</strong>. Ubytování si každý zajišťuje sám. Po odeslání formuláře vám přijdou platební údaje na e-mail.
+      </p>
+    </div>
+
+    <div class="section-content">
+      <div class="account-box">
+        <div class="tabs" role="tablist">
+          <button class="tab-btn is-active" data-tab="register" role="tab" aria-selected="true" type="button">Nová registrace</button>
+          <button class="tab-btn" data-tab="lookup" role="tab" aria-selected="false" type="button">Najít registraci</button>
+        </div>
+
+        <!-- FORMULÁŘ: NOVÁ REGISTRACE -->
+        <form id="register-form" class="tab-panel is-active" data-panel="register" novalidate>
+          <div class="form-grid">
+            <div class="form-row">
+              <label for="reg-jmeno">Jméno a příjmení *</label>
+              <input type="text" id="reg-jmeno" name="jmeno" required autocomplete="name" enterkeyhint="next" placeholder="Jana Nováková">
+            </div>
+            <div class="form-row">
+              <label for="reg-email">E-mail *</label>
+              <input type="email" id="reg-email" name="email" required autocomplete="email" inputmode="email" enterkeyhint="next" placeholder="jana@skaut.cz">
+            </div>
+            <div class="form-row">
+              <label for="reg-oddil">Oddíl / středisko <span class="opt">(nepovinné)</span></label>
+              <input type="text" id="reg-oddil" name="oddil" autocomplete="organization" enterkeyhint="next" placeholder="např. 6. středisko Brno">
+            </div>
+            <div class="form-row">
+              <label for="reg-tricko">Velikost trička</label>
+              <select id="reg-tricko" name="tricko">
+                <option value="">Nevím / nechci tričko</option>
+                <option>XS</option>
+                <option>S</option>
+                <option>M</option>
+                <option>L</option>
+                <option>XL</option>
+                <option>XXL</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="reg-poznamka">Poznámka <span class="opt">(potvrzení věku 16+, dieta, dotazy)</span></label>
+            <textarea id="reg-poznamka" name="poznamka" rows="3" placeholder="Např. bezlepková dieta, dotaz k programu…"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Odeslat registraci (16+)</button>
+          <p class="form-msg" id="register-msg" role="status"></p>
+        </form>
+
+        <!-- FORMULÁŘ: VYHLEDÁNÍ REGISTRACE -->
+        <form id="lookup-form" class="tab-panel" data-panel="lookup" novalidate>
+          <div class="form-row">
+            <label for="lookup-email">E-mail, se kterým jste se registrovali</label>
+            <input type="email" id="lookup-email" name="email" required autocomplete="email" inputmode="email" enterkeyhint="search" placeholder="jana@skaut.cz">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Najít registraci</button>
+          <p class="form-msg" id="lookup-msg" role="status"></p>
+        </form>
+
+        <!-- VÝSLEDEK VYHLEDÁNÍ -->
+        <div id="registration-result" class="registration-result" hidden>
+          <div class="result-header">
+            <span class="result-icon">✓</span>
+            <h3>Registrace nalezena</h3>
+            <span class="paid-badge" id="paid-badge"></span>
+          </div>
+          <dl class="result-list" id="result-list"></dl>
+          <div class="result-actions">
+            <button id="cancel-registration" class="btn btn-outline btn-danger btn-block" type="button">Zrušit registraci</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-cell">
+      <span class="footer-title">BRKVIK 2027</span>
+      <p>Brněnský skautský festival (16+)</p>
+    </div>
+    <div class="footer-cell">
+      <span class="footer-label">KONTAKT</span>
+      <p><a href="mailto:info@brkvik.cz">info@brkvik.cz</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
