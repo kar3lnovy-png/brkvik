@@ -66,6 +66,10 @@
               <input type="email" id="reg-email" name="email" required autocomplete="email" inputmode="email" enterkeyhint="next" placeholder="jana@skaut.cz">
             </div>
             <div class="form-row">
+              <label for="reg-narozeni">Datum narození * <span class="opt">(16+ a správa přihlášky)</span></label>
+              <input type="date" id="reg-narozeni" name="narozeni" required autocomplete="bday" enterkeyhint="next">
+            </div>
+            <div class="form-row">
               <label for="reg-oddil">Oddíl / středisko <span class="opt">(nepovinné)</span></label>
               <input type="text" id="reg-oddil" name="oddil" autocomplete="organization" enterkeyhint="next" placeholder="např. 6. středisko Brno">
             </div>
@@ -84,7 +88,7 @@
           </div>
 
           <div class="form-row">
-            <label for="reg-poznamka">Poznámka <span class="opt">(potvrzení věku 16+, dieta, dotazy)</span></label>
+            <label for="reg-poznamka">Poznámka <span class="opt">(dieta, alergie, dotazy)</span></label>
             <textarea id="reg-poznamka" name="poznamka" rows="3" placeholder="Např. bezlepková dieta, dotaz k programu…"></textarea>
           </div>
 
@@ -94,9 +98,15 @@
 
         <!-- FORMULÁŘ: VYHLEDÁNÍ REGISTRACE -->
         <form id="lookup-form" class="tab-panel" data-panel="lookup" novalidate>
-          <div class="form-row">
-            <label for="lookup-email">E-mail, se kterým jste se registrovali</label>
-            <input type="email" id="lookup-email" name="email" required autocomplete="email" inputmode="email" enterkeyhint="search" placeholder="jana@skaut.cz">
+          <div class="form-grid">
+            <div class="form-row">
+              <label for="lookup-email">E-mail z registrace *</label>
+              <input type="email" id="lookup-email" name="email" required autocomplete="email" inputmode="email" enterkeyhint="next" placeholder="jana@skaut.cz">
+            </div>
+            <div class="form-row">
+              <label for="lookup-narozeni">Datum narození *</label>
+              <input type="date" id="lookup-narozeni" name="narozeni" required autocomplete="bday" enterkeyhint="search">
+            </div>
           </div>
           <button type="submit" class="btn btn-primary btn-block">Najít registraci</button>
           <p class="form-msg" id="lookup-msg" role="status"></p>
