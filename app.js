@@ -4,6 +4,31 @@
 
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzRhjR1nXjXWpbNvWWHzoctCRtiFwiCI0ABieGAIQW2VFTqWx5W9eZQZ7Mjij8sSog-Ig/exec";
 
+// Datum, ke kterému se počítá dovršení 16 let (uprav podle termínu akce)
+const FESTIVAL_START_DATE = new Date("2027-28-05");
+
+/* ---------- Pomocné funkce ---------- */
+
+function isAtLeast16(birthDateStr) {
+  const birth = new Date(birthDateStr);
+  if (isNaN(birth.getTime())) return false;
+
+  const refDate = FESTIVAL_START_DATE;
+  let age = refDate.getFullYear() - birth.getFullYear();
+  const m = refDate.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && refDate.getDate() < birth.getDate())) {
+    age--;
+  }
+  return age >= 16;
+}
+
+function formatCzDate(isoDateStr) {
+  if (!isoDateStr) return "—";
+  const parts = isoDateStr.split("-");
+  if (parts.length !== 3) return isoDateStr;
+  return `${Number(parts[2])}. ${Number(parts[1])}. ${parts[0]}`;
+}
+
 /* ---------- Přepínání záložek ---------- */
 
 function initTabs() {
@@ -56,24 +81,31 @@ function initRegisterForm() {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     msg.className = "form-msg";
-    msg.textContent = "Odesílám přihlášku…";
-    submitBtn.disabled = true;
 
     const jmeno = form.jmeno.value.trim();
     const email = form.email.value.trim();
+    const narozeni = form.narozeni.value; // formát YYYY-MM-DD
     const oddil = form.oddil.value.trim();
     const tricko = form.tricko.value;
     const poznamka = form.poznamka.value.trim();
 
-    if (!jmeno || !email) {
-      msg.textContent = "Vyplňte prosím jméno a e-mailovou adresu.";
+    if (!jmeno || !email || !narozeni) {
+      msg.textContent = "Vyplňte prosím jméno, e-mail a datum narození.";
       msg.classList.add("is-error");
-      submitBtn.disabled = false;
       return;
     }
 
+    if (!isAtLeast16(narozeni)) {
+      msg.textContent = "Festival je určen pouze pro účastníky starší 16 let.";
+      msg.classList.add("is-error");
+      return;
+    }
+
+    msg.textContent = "Odesílám přihlášku…";
+    submitBtn.disabled = true;
+
     try {
-      const data = await callBackend("register", { jmeno, email, oddil, tricko, poznamka });
+      const data = await callBackend("register", { jmeno, email, narozeni, oddil, tricko, poznamka });
 
       if (data.error) {
         msg.textContent = data.error;
@@ -103,21 +135,29 @@ function initLookupForm() {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     msg.className = "form-msg";
-    msg.textContent = "Vyhledávám…";
-    submitBtn.disabled = true;
     document.getElementById("registration-result").hidden = true;
 
     const email = form.email.value.trim();
+    const narozeni = form.narozeni.value;
+
+    if (!email || !narozeni) {
+      msg.textContent = "Zadejte prosím e-mail i datum narození.";
+      msg.classList.add("is-error");
+      return;
+    }
+
+    msg.textContent = "Vyhledávám…";
+    submitBtn.disabled = true;
 
     try {
-      const data = await callBackend("lookup", { email });
+      const data = await callBackend("lookup", { email, narozeni });
 
       if (data.error) {
         msg.textContent = data.error;
         msg.classList.add("is-error");
       } else {
         msg.textContent = "";
-        showResult(data);
+        showResult(data, narozeni);
       }
     } catch (err) {
       msg.textContent = err.message || "Spojení se serverem selhalo. Zkuste to prosím znovu.";
@@ -128,7 +168,7 @@ function initLookupForm() {
   });
 }
 
-function showResult(entry) {
+function showResult(entry, lookupNarozeni) {
   const result = document.getElementById("registration-result");
   const list = document.getElementById("result-list");
 
@@ -141,6 +181,7 @@ function showResult(entry) {
   const rows = [
     ["Jméno", entry.jmeno],
     ["E-mail", entry.email],
+    ["Datum narození", formatCzDate(entry.narozeni || lookupNarozeni)],
     ["Oddíl / středisko", entry.oddil || "—"],
     ["Velikost trička", entry.tricko || "—"],
     ["Poznámka", entry.poznamka || "—"],
@@ -159,6 +200,7 @@ function showResult(entry) {
 
   result.hidden = false;
   result.dataset.email = entry.email;
+  result.dataset.narozeni = entry.narozeni || lookupNarozeni;
   result.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
@@ -169,13 +211,14 @@ function initCancelRegistration() {
   btn.addEventListener("click", async () => {
     const result = document.getElementById("registration-result");
     const email = result.dataset.email;
-    if (!email) return;
+    const narozeni = result.dataset.narozeni;
+    if (!email || !narozeni) return;
 
     if (!confirm("Opravdu si přejete zrušit svou registraci na festival Brkvík?")) return;
 
     btn.disabled = true;
     try {
-      const data = await callBackend("cancel", { email });
+      const data = await callBackend("cancel", { email, narozeni });
       if (data.error) {
         alert(data.error);
       } else {
