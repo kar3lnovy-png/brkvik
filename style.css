@@ -1,34 +1,58 @@
-/* ==========================================================
-   BRKVIK 2027 — Minimalist Swiss Design System
-   Barvy a poměry dle oficiálního grafického manuálu
-   ========================================================== */
+@font-face {
+  font-family: "HVD Rowdy";
+  src: local("HVD Rowdy"), local("HVDRowdy"),
+       url("HVDRowdy-Regular.ttf") format("truetype"),
+       url("HVDRowdy.ttf") format("truetype"),
+       url("HVDRowdy.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TheMix C5";
+  src: local("TheMix C5 SemiLight"), local("TheMixC5-SemiLight"),
+       url("TheMixC5-SemiLight.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TheMix C5";
+  src: local("TheMix C5 Bold"), local("TheMixC5-Bold"),
+       url("TheMixC5-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
-  /* Oficiální paleta z manuálu */
   --blue: #B7D2FD;
   --orange: #F4380A;
   --rust: #B52705;
   --burgundy: #440F19;
 
-  /* Doplňkové neutrální tóny pro čitelnost švýcarské mřížky */
   --paper: #F7F9FC;
   --white: #FFFFFF;
 
-  /* Typografie (HVD Rowdy -> Rubik Mono One, TheMix C5 -> Plus Jakarta Sans) */
-  --font-display: "Rubik Mono One", sans-serif;
-  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: "IBM Plex Mono", monospace;
+  /* Typografie */
+  --font-display: "HVD Rowdy", "Impact", "Arial Black", sans-serif;
+  --font-sans: "TheMix C5", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
 
-  /* Mřížka */
+  /* Švýcarská linka */
   --grid-border: 1.5px solid var(--burgundy);
 }
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 6.5rem; /* Aby sticky hlavička na mobilu nepřekrývala nadpisy sekcí */
 }
 
 body {
@@ -36,9 +60,11 @@ body {
   background-color: var(--paper);
   color: var(--burgundy);
   font-family: var(--font-sans);
+  font-weight: 400;
   font-size: 16px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 a {
@@ -56,59 +82,63 @@ svg {
   color: var(--white);
 }
 
-/* ---------- Typografická škála 9 : 4 : 3 (dle manuálu) ---------- */
+/* ---------- Typografický poměr 9 : 4 : 3 (dle manuálu) ---------- */
 
 .type-scale-9 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(2.6rem, 6vw, 4.5rem); /* 9 dílů */
-  line-height: 0.96;
-  letter-spacing: -0.02em;
+  font-size: clamp(2.5rem, 11vw, 4.75rem);
+  line-height: 0.94;
+  letter-spacing: 0.01em;
   text-transform: uppercase;
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.4rem 0;
 }
 
 .type-scale-4 {
   font-family: var(--font-sans);
-  font-weight: 800;
-  font-size: clamp(1.25rem, 2.6vw, 2rem); /* 4 díly */
+  font-weight: 700;
+  font-size: clamp(1.2rem, 4.5vw, 2.1rem);
   line-height: 1.15;
   letter-spacing: 0.02em;
   text-transform: uppercase;
-  margin: 0 0 1.25rem 0;
+  margin: 0 0 1rem 0;
 }
 
 .type-scale-3 {
   font-family: var(--font-sans);
-  font-weight: 500;
-  font-size: clamp(1rem, 1.8vw, 1.35rem); /* 3 díly */
+  font-weight: 400;
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
   line-height: 1.45;
   margin: 0;
 }
 
-/* ---------- Header ---------- */
+/* ---------- Header (Mobile-First: 2 řádky, nulový horizontální scroll) ---------- */
 
 .site-header {
   position: sticky;
   top: 0;
   z-index: 100;
-  display: grid;
-  grid-template-columns: auto 1fr;
   background: var(--paper);
+  border-bottom: var(--grid-border);
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   border-bottom: var(--grid-border);
 }
 
 .brand-lockup {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  padding: 0.85rem 1.75rem;
-  border-right: var(--grid-border);
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
 }
 
 .brand-mark {
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
   flex-shrink: 0;
 }
 
@@ -120,84 +150,152 @@ svg {
 
 .brand-title {
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   color: var(--burgundy);
 }
 
 .brand-year {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.72rem;
+  font-weight: 700;
   color: var(--orange);
-  letter-spacing: 0.12em;
-  margin-top: 2px;
+  letter-spacing: 0.1em;
 }
 
-.site-nav {
+.mobile-quick-cta {
+  align-self: stretch;
   display: flex;
-  justify-content: flex-end;
-  align-items: stretch;
+  align-items: center;
+  padding: 0 1.15rem;
+  background-color: var(--orange);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-left: var(--grid-border);
+}
+
+/* 4-sloupcová mřížka navigace pro palec na mobilu */
+.site-nav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .site-nav a {
   display: flex;
   align-items: center;
-  padding: 0 1.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  font-weight: 600;
+  justify-content: center;
+  gap: 0.25rem;
+  min-height: 42px;
+  padding: 0.4rem 0.25rem;
+  font-size: 0.78rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  border-left: var(--grid-border);
+  border-right: 1px solid var(--burgundy);
+  text-align: center;
+}
+
+.site-nav a:last-child {
+  border-right: none;
+}
+
+.nav-num {
+  display: none;
+  font-family: var(--font-mono);
+  color: var(--rust);
+  font-size: 0.72rem;
+}
+
+/* ---------- Tlačítka (Touch-friendly min. 48px výška) ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.85rem 1.5rem;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: var(--grid-border);
+  border-radius: 0;
+  cursor: pointer;
   transition: background-color 0.15s ease, color 0.15s ease;
+  touch-action: manipulation;
 }
 
-.site-nav a:hover {
-  background-color: var(--blue);
-}
-
-.site-nav .nav-cta {
+.btn-primary {
   background-color: var(--orange);
   color: var(--white);
+  border-color: var(--burgundy);
 }
 
-.site-nav .nav-cta:hover {
+.btn-primary:hover,
+.btn-primary:active {
   background-color: var(--burgundy);
   color: var(--white);
 }
 
-/* ---------- Hero Grid ---------- */
+.btn-outline {
+  background-color: var(--white);
+  color: var(--burgundy);
+}
+
+.btn-outline:hover,
+.btn-outline:active {
+  background-color: var(--blue);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-danger {
+  background-color: transparent;
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.btn-danger:hover,
+.btn-danger:active {
+  background-color: var(--orange);
+  color: var(--white);
+}
+
+/* ---------- Hero Sekce (Mobile-First) ---------- */
 
 .hero-grid {
-  display: grid;
-  grid-template-columns: 7fr 5fr;
+  display: flex;
+  flex-direction: column;
   border-bottom: var(--grid-border);
 }
 
-.hero-cell {
-  padding: 3.5rem 3rem;
-}
-
 .hero-main {
-  border-right: var(--grid-border);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  padding: 1.75rem 1.25rem 2rem;
   background-color: var(--paper);
+  border-bottom: var(--grid-border);
 }
 
 .swiss-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: 0.78rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding-bottom: 2rem;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid var(--burgundy);
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.65rem;
+  background-color: var(--blue);
+  border: 1px solid var(--burgundy);
+  margin-bottom: 1.25rem;
+}
+
+.meta-sep {
+  color: var(--orange);
 }
 
 .hero-main .type-scale-9 {
@@ -209,179 +307,118 @@ svg {
 }
 
 .hero-lead {
-  max-width: 58ch;
-  margin-bottom: 2.5rem;
+  max-width: 54ch;
+  margin-bottom: 1.5rem;
 }
 
 .hero-actions {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
 }
 
 .hero-visual {
   background-color: var(--burgundy);
+  padding: 2rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2.5rem;
+  border-bottom: var(--grid-border);
 }
 
 .hero-illustration {
-  width: min(420px, 100%);
+  width: min(260px, 72vw);
   height: auto;
 }
 
 .hero-strip {
-  grid-column: 1 / -1;
-  border-top: var(--grid-border);
-  padding: 0;
   display: grid;
-  grid-template-columns: repeat(3, 1fr) auto;
+  grid-template-columns: 1fr 1fr;
   background-color: var(--blue);
 }
 
 .strip-item {
-  padding: 1.5rem 2rem;
-  border-right: var(--grid-border);
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--burgundy);
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.strip-item:last-child {
-  border-right: none;
+.strip-item:nth-child(1) {
+  border-right: 1px solid var(--burgundy);
+}
+
+.strip-item:nth-child(3) {
+  grid-column: 1 / -1;
+  border-bottom: none;
 }
 
 .strip-label {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--rust);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.15rem;
 }
 
 .strip-val {
-  font-weight: 800;
-  font-size: 1.05rem;
+  font-weight: 700;
+  font-size: 0.95rem;
 }
 
 .strip-stack {
-  background-color: var(--orange);
-  color: var(--burgundy);
-  padding: 1rem 1.75rem;
+  display: none;
 }
 
-.stacked-badge {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  line-height: 0.92;
-  display: flex;
-  flex-direction: column;
-}
-
-.stacked-badge .accent {
-  color: var(--blue);
-}
-
-/* ---------- Tlačítka (Ostré hrany, Swiss styl) ---------- */
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.95rem 1.8rem;
-  font-family: var(--font-sans);
-  font-weight: 800;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  border: var(--grid-border);
-  cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
-}
-
-.btn-primary {
-  background-color: var(--orange);
-  color: var(--white);
-  border-color: var(--burgundy);
-}
-
-.btn-primary:hover {
-  background-color: var(--burgundy);
-  color: var(--white);
-}
-
-.btn-outline {
-  background-color: transparent;
-  color: var(--burgundy);
-}
-
-.btn-outline:hover {
-  background-color: var(--blue);
-}
-
-.btn-block {
-  width: 100%;
-}
-
-.btn-danger {
-  border-color: var(--orange);
-  color: var(--orange);
-}
-
-.btn-danger:hover {
-  background-color: var(--orange);
-  color: var(--white);
-}
-
-/* ---------- Sekce (Swiss Asymmetric Layout) ---------- */
+/* ---------- Sekce (Mobile-First) ---------- */
 
 .swiss-section {
-  display: grid;
-  grid-template-columns: 340px 1fr;
+  display: flex;
+  flex-direction: column;
   border-bottom: var(--grid-border);
 }
 
 .section-sidebar {
-  padding: 3rem 2.25rem;
-  border-right: var(--grid-border);
+  padding: 1.5rem 1.25rem;
+  border-bottom: var(--grid-border);
+}
+
+.sidebar-top {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  align-items: baseline;
+  gap: 0.75rem;
 }
 
 .section-num {
   font-family: var(--font-display);
-  font-size: 2.5rem;
+  font-size: 1.65rem;
   line-height: 1;
   color: var(--orange);
-  margin-bottom: 0.5rem;
 }
 
 .section-heading {
   font-family: var(--font-sans);
-  font-weight: 800;
-  font-size: 1.5rem;
-  letter-spacing: 0.04em;
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
-  margin: 0 0 1.5rem 0;
+  margin: 0;
 }
 
 .sidebar-note {
   font-size: 0.92rem;
-  line-height: 1.5;
-  margin: 0;
-  opacity: 0.85;
+  margin: 0.6rem 0 0 0;
+  opacity: 0.9;
 }
 
-.section-content {
-  display: flex;
-  flex-direction: column;
+.cube-figure-svg,
+.horse-silhouette {
+  display: none; /* Na mobilu schováno, aby nezabíralo vertikální prostor */
 }
 
-/* Barevné varianty sekcí dle manuálu */
 .theme-blue {
   background-color: var(--blue);
   color: var(--burgundy);
@@ -393,19 +430,13 @@ svg {
 }
 
 .theme-dark .section-sidebar {
-  border-right-color: rgba(183, 210, 253, 0.25);
+  border-bottom-color: rgba(183, 210, 253, 0.25);
 }
 
 /* ---------- 01 / O festivalu ---------- */
 
-.cube-figure-svg {
-  width: 210px;
-  margin-top: auto;
-  padding-top: 2rem;
-}
-
 .intro-block {
-  padding: 3rem;
+  padding: 1.75rem 1.25rem;
   border-bottom: var(--grid-border);
   background-color: var(--white);
 }
@@ -415,93 +446,85 @@ svg {
 }
 
 .pillars-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  flex: 1;
-}
-
-.pillar-card {
-  padding: 2.5rem 2rem;
-  border-right: var(--grid-border);
   display: flex;
   flex-direction: column;
 }
 
+.pillar-card {
+  padding: 1.5rem 1.25rem;
+  border-bottom: var(--grid-border);
+}
+
 .pillar-card:last-child {
-  border-right: none;
+  border-bottom: none;
 }
 
 .pillar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 0.75rem;
 }
 
 .pillar-index {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 700;
   color: var(--rust);
 }
 
 .pillar-icon {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
 }
 
 .pillar-card h3 {
-  font-family: var(--font-sans);
-  font-weight: 800;
-  font-size: 1.35rem;
+  font-weight: 700;
+  font-size: 1.25rem;
   text-transform: uppercase;
-  margin: 0 0 0.75rem 0;
+  margin: 0 0 0.4rem 0;
 }
 
 .pillar-card p {
   margin: 0;
   font-size: 0.95rem;
-  line-height: 1.55;
 }
 
-/* ---------- 02 / Harmonogram ---------- */
+/* ---------- 02 / Program ---------- */
 
 .schedule-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  height: 100%;
-}
-
-.schedule-col {
-  border-right: var(--grid-border);
   display: flex;
   flex-direction: column;
 }
 
+.schedule-col {
+  border-bottom: var(--grid-border);
+}
+
 .schedule-col:last-child {
-  border-right: none;
+  border-bottom: none;
 }
 
 .day-header {
-  padding: 2rem;
-  border-bottom: var(--grid-border);
-  background-color: rgba(255, 255, 255, 0.35);
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--burgundy);
+  background-color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
 }
 
 .day-num {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--rust);
-  display: block;
-  margin-bottom: 0.25rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--burgundy);
 }
 
-.day-title {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  margin: 0;
-  color: var(--burgundy);
+.day-date {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--rust);
 }
 
 .schedule-list {
@@ -512,9 +535,9 @@ svg {
 
 .schedule-list li {
   display: grid;
-  grid-template-columns: 72px 1fr;
-  padding: 1.15rem 2rem;
-  border-bottom: 1px solid rgba(68, 15, 25, 0.25);
+  grid-template-columns: 64px 1fr;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid rgba(68, 15, 25, 0.2);
   font-size: 0.95rem;
   align-items: baseline;
 }
@@ -525,92 +548,81 @@ svg {
 
 .schedule-list .time {
   font-family: var(--font-mono);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--rust);
+  font-size: 0.88rem;
 }
 
 .schedule-list .event {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 /* ---------- 03 / Informace ---------- */
 
-.horse-silhouette {
-  width: 180px;
-  margin-top: auto;
-  padding-top: 1.5rem;
-}
-
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  height: 100%;
+  grid-template-columns: 1fr;
 }
 
 .info-cell {
-  padding: 2.75rem 2.5rem;
-  border-right: var(--grid-border);
+  padding: 1.5rem 1.25rem;
   border-bottom: var(--grid-border);
   background-color: var(--white);
 }
 
-.info-cell:nth-child(2n) {
-  border-right: none;
-}
-
-.info-cell:nth-last-child(-n+2) {
+.info-cell:last-child {
   border-bottom: none;
 }
 
 .info-label {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 700;
   color: var(--orange);
   display: block;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.35rem;
 }
 
 .info-value {
-  font-family: var(--font-sans);
-  font-weight: 800;
-  font-size: 1.6rem;
-  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+  font-size: 1.35rem;
+  margin: 0 0 0.25rem 0;
   text-transform: uppercase;
 }
 
 .info-sub {
   margin: 0;
-  font-size: 0.92rem;
-  opacity: 0.8;
+  font-size: 0.9rem;
+  opacity: 0.85;
 }
 
-/* ---------- 04 / Registrace ---------- */
+/* ---------- 04 / Registrace (Optimalizováno pro mobilní klávesnice) ---------- */
 
 .account-box {
-  padding: 3rem;
+  padding: 1.5rem 1.25rem 2.25rem;
   max-width: 760px;
 }
 
 .tabs {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   border: 1.5px solid var(--blue);
-  margin-bottom: 2.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .tab-btn {
-  flex: 1;
+  min-height: 48px;
   background: transparent;
   border: none;
   color: var(--blue);
-  font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: 0.85rem;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.82rem;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 1rem;
+  letter-spacing: 0.04em;
+  padding: 0.75rem 0.5rem;
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  touch-action: manipulation;
 }
 
 .tab-btn:first-child {
@@ -631,41 +643,50 @@ svg {
 }
 
 .form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-row {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.15rem;
 }
 
 .form-row label {
   display: block;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  font-size: 0.85rem;
+  font-weight: 700;
   color: var(--blue);
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.4rem;
 }
 
 .form-row .opt {
-  opacity: 0.65;
-  text-transform: none;
+  font-weight: 400;
+  opacity: 0.75;
 }
 
+/* 16px (1rem) zabraňuje automatickému zoomování na iOS Safari */
 .form-row input,
 .form-row select,
 .form-row textarea {
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.06);
-  border: 1.5px solid rgba(183, 210, 253, 0.4);
-  padding: 0.85rem 1rem;
+  min-height: 48px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(183, 210, 253, 0.45);
+  padding: 0.75rem 0.9rem;
   color: var(--white);
   font-family: var(--font-sans);
-  font-size: 0.95rem;
+  font-size: 1rem;
   border-radius: 0;
+  appearance: none;
+}
+
+.form-row select {
+  background-image: linear-gradient(45deg, transparent 50%, var(--blue) 50%),
+                    linear-gradient(135deg, var(--blue) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 12px) 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 2.5rem;
 }
 
 .form-row select option {
@@ -678,13 +699,13 @@ svg {
 .form-row textarea:focus {
   outline: none;
   border-color: var(--orange);
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.12);
 }
 
 .form-msg {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  margin-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 1rem 0 0;
   min-height: 1.4em;
 }
 
@@ -698,46 +719,45 @@ svg {
 
 /* Výsledek vyhledání registrace */
 .registration-result {
-  margin-top: 2rem;
-  padding: 2rem;
+  margin-top: 1.5rem;
+  padding: 1.25rem;
   border: 1.5px solid var(--blue);
-  background-color: rgba(183, 210, 253, 0.05);
+  background-color: rgba(183, 210, 253, 0.06);
 }
 
 .result-header {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.65rem;
   flex-wrap: wrap;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.85rem;
   border-bottom: 1px solid rgba(183, 210, 253, 0.25);
 }
 
 .result-icon {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   background-color: var(--blue);
   color: var(--burgundy);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .result-header h3 {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   text-transform: uppercase;
 }
 
 .paid-badge {
-  margin-left: auto;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.72rem;
+  font-weight: 700;
   text-transform: uppercase;
-  padding: 0.35rem 0.75rem;
+  padding: 0.25rem 0.6rem;
   border: 1px solid currentColor;
 }
 
@@ -753,24 +773,27 @@ svg {
 
 .result-list {
   display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 0.75rem 1.5rem;
-  margin: 0 0 1.75rem 0;
+  grid-template-columns: 1fr;
+  gap: 0.2rem;
+  margin: 0 0 1.5rem 0;
 }
 
 .result-list dt {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
   color: var(--blue);
+  margin-top: 0.6rem;
 }
 
 .result-list dd {
   margin: 0;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 0.98rem;
+  word-break: break-word;
 }
 
-/* ---------- Footer ---------- */
+/* ---------- Footer (2 buňky, bez vizuálního stylu) ---------- */
 
 .site-footer {
   background-color: var(--paper);
@@ -778,137 +801,300 @@ svg {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
 }
 
 .footer-cell {
-  padding: 2rem 2.25rem;
-  border-right: var(--grid-border);
+  padding: 1.5rem 1.25rem;
+  border-bottom: var(--grid-border);
 }
 
 .footer-cell:last-child {
-  border-right: none;
+  border-bottom: none;
 }
 
 .footer-title {
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: 1.05rem;
   display: block;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
 }
 
 .footer-label {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--rust);
   display: block;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.2rem;
 }
 
 .footer-cell p {
   margin: 0;
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.92rem;
+  font-weight: 700;
 }
 
-.color-dots {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
+/* ==========================================================
+   TABLET & DESKTOP UPGRADES (min-width: 768px a 1024px)
+   ========================================================== */
 
-.color-dots .dot {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 1px solid var(--burgundy);
-}
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 4.5rem;
+  }
 
-/* ---------- Responzivita ---------- */
+  .site-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+  }
 
-@media (max-width: 980px) {
-  .hero-grid {
-    grid-template-columns: 1fr;
+  .header-top {
+    border-bottom: none;
+    border-right: var(--grid-border);
   }
-  .hero-main {
-    border-right: none;
-    border-bottom: var(--grid-border);
+
+  .brand-lockup {
+    padding: 0.85rem 1.75rem;
   }
-  .hero-strip {
-    grid-template-columns: 1fr 1fr;
-  }
-  .strip-item:nth-child(2) {
-    border-right: none;
-  }
-  .strip-item:nth-child(1),
-  .strip-item:nth-child(2) {
-    border-bottom: var(--grid-border);
-  }
-  .swiss-section {
-    grid-template-columns: 1fr;
-  }
-  .section-sidebar {
-    border-right: none;
-    border-bottom: var(--grid-border);
-    padding: 2rem;
-  }
-  .cube-figure-svg,
-  .horse-silhouette {
+
+  .mobile-quick-cta {
     display: none;
   }
-  .pillars-grid,
-  .schedule-grid {
-    grid-template-columns: 1fr;
+
+  .site-nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: stretch;
   }
-  .pillar-card,
-  .schedule-col {
+
+  .site-nav a {
+    padding: 0 1.5rem;
+    font-size: 0.85rem;
     border-right: none;
-    border-bottom: var(--grid-border);
+    border-left: var(--grid-border);
+    gap: 0.4rem;
   }
-  .pillar-card:last-child,
-  .schedule-col:last-child {
+
+  .site-nav a:hover {
+    background-color: var(--blue);
+  }
+
+  .site-nav .nav-cta {
+    background-color: var(--orange);
+    color: var(--white);
+  }
+
+  .site-nav .nav-cta:hover {
+    background-color: var(--burgundy);
+  }
+
+  .site-nav .nav-cta .nav-num {
+    color: var(--blue);
+  }
+
+  .nav-num {
+    display: inline;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .info-cell:nth-child(odd) {
+    border-right: var(--grid-border);
+  }
+
+  .info-cell:nth-last-child(-n+2) {
     border-bottom: none;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .result-list {
+    grid-template-columns: 170px 1fr;
+    gap: 0.65rem 1.25rem;
+  }
+
+  .result-list dt {
+    margin-top: 0;
+  }
+
+  .paid-badge {
+    margin-left: auto;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-cell {
+    padding: 2rem 2.5rem;
+    border-bottom: none;
+    border-right: var(--grid-border);
+  }
+
+  .footer-cell:last-child {
+    border-right: none;
   }
 }
 
-@media (max-width: 680px) {
-  .site-header {
-    grid-template-columns: 1fr;
+@media (min-width: 1024px) {
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
   }
-  .brand-lockup {
-    border-right: none;
-    border-bottom: var(--grid-border);
-  }
-  .site-nav {
-    overflow-x: auto;
-    justify-content: flex-start;
-  }
-  .site-nav a {
-    padding: 0.85rem 1rem;
-    border-left: none;
+
+  .hero-main {
+    padding: 3.5rem 3rem;
     border-right: var(--grid-border);
-    white-space: nowrap;
+    border-bottom: var(--grid-border);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
-  .hero-cell {
-    padding: 2rem 1.5rem;
-  }
-  .hero-strip,
-  .info-grid,
-  .form-grid,
-  .footer-grid {
-    grid-template-columns: 1fr;
-  }
-  .info-cell,
-  .footer-cell {
-    border-right: none;
+
+  .hero-visual {
+    padding: 2.5rem;
     border-bottom: var(--grid-border);
   }
-  .account-box {
-    padding: 1.75rem 1.25rem;
+
+  .hero-illustration {
+    width: min(400px, 100%);
   }
-  .result-list {
-    grid-template-columns: 1fr;
-    gap: 0.25rem;
+
+  .hero-strip {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(3, 1fr) auto;
+  }
+
+  .strip-item {
+    padding: 1.5rem 2rem;
+    border-bottom: none;
+    border-right: var(--grid-border) !important;
+  }
+
+  .strip-item:nth-child(3) {
+    grid-column: auto;
+  }
+
+  .strip-stack {
+    display: flex;
+    background-color: var(--orange);
+    color: var(--burgundy);
+    padding: 1rem 1.75rem;
+    border-right: none !important;
+  }
+
+  .stacked-badge {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    line-height: 0.92;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stacked-badge .accent {
+    color: var(--blue);
+  }
+
+  .swiss-section {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+  }
+
+  .section-sidebar {
+    padding: 2.75rem 2.25rem;
+    border-bottom: none;
+    border-right: var(--grid-border);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .theme-dark .section-sidebar {
+    border-right-color: rgba(183, 210, 253, 0.25);
+  }
+
+  .sidebar-top {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .section-num {
+    font-size: 2.4rem;
+  }
+
+  .cube-figure-svg {
+    display: block;
+    width: 200px;
+    margin-top: auto;
+    padding-top: 2rem;
+  }
+
+  .horse-silhouette {
+    display: block;
+    width: 175px;
+    margin-top: auto;
+    padding-top: 1.5rem;
+  }
+
+  .intro-block {
+    padding: 2.75rem 3rem;
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    flex: 1;
+  }
+
+  .pillar-card {
+    padding: 2.25rem 2rem;
+    border-bottom: none;
+    border-right: var(--grid-border);
+  }
+
+  .pillar-card:last-child {
+    border-right: none;
+  }
+
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: 100%;
+  }
+
+  .schedule-col {
+    border-bottom: none;
+    border-right: var(--grid-border);
+  }
+
+  .schedule-col:last-child {
+    border-right: none;
+  }
+
+  .day-header {
+    padding: 1.75rem 2rem;
+  }
+
+  .schedule-list li {
+    padding: 1.1rem 2rem;
+  }
+
+  .info-cell {
+    padding: 2.5rem;
+  }
+
+  .account-box {
+    padding: 2.75rem 3rem;
   }
 }
