@@ -1,9 +1,13 @@
+/* ==========================================================
+   BRKVIK 2027 — Minimalist Swiss Design (Mobile-First)
+   Barvy, fonty a poměry 9:4:3 dle oficiálního manuálu
+   ========================================================== */
+
 @font-face {
   font-family: "HVD Rowdy";
   src: local("HVD Rowdy"), local("HVDRowdy"),
-       url("HVDRowdy-Regular.ttf") format("truetype"),
-       url("HVDRowdy.ttf") format("truetype"),
-       url("HVDRowdy.otf") format("opentype");
+       url("HVD_Rowdy.ttf") format("truetype"),
+       url("HVDRowdy-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -12,6 +16,7 @@
 @font-face {
   font-family: "TheMix C5";
   src: local("TheMix C5 SemiLight"), local("TheMixC5-SemiLight"),
+       url("TheMixC5-4_SemiLight.otf") format("opentype"),
        url("TheMixC5-SemiLight.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
@@ -21,6 +26,7 @@
 @font-face {
   font-family: "TheMix C5";
   src: local("TheMix C5 Bold"), local("TheMixC5-Bold"),
+       url("TheMixC5-7_Bold.otf") format("opentype"),
        url("TheMixC5-Bold.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
@@ -32,16 +38,13 @@
   --orange: #F4380A;
   --rust: #B52705;
   --burgundy: #440F19;
-
   --paper: #F7F9FC;
   --white: #FFFFFF;
 
-  /* Typografie */
   --font-display: "HVD Rowdy", "Impact", "Arial Black", sans-serif;
   --font-sans: "TheMix C5", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
 
-  /* Švýcarská linka */
   --grid-border: 1.5px solid var(--burgundy);
 }
 
@@ -52,7 +55,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 6.5rem; /* Aby sticky hlavička na mobilu nepřekrývala nadpisy sekcí */
+  scroll-padding-top: 6.5rem;
 }
 
 body {
@@ -65,6 +68,13 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
 }
 
 a {
@@ -82,12 +92,12 @@ svg {
   color: var(--white);
 }
 
-/* ---------- Typografický poměr 9 : 4 : 3 (dle manuálu) ---------- */
+/* ---------- Typografický poměr 9 : 4 : 3 ---------- */
 
 .type-scale-9 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(2.5rem, 11vw, 4.75rem);
+  font-size: clamp(2.4rem, 10.5vw, 4.75rem);
   line-height: 0.94;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -97,7 +107,7 @@ svg {
 .type-scale-4 {
   font-family: var(--font-sans);
   font-weight: 700;
-  font-size: clamp(1.2rem, 4.5vw, 2.1rem);
+  font-size: clamp(1.15rem, 4.2vw, 2.05rem);
   line-height: 1.15;
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -107,12 +117,12 @@ svg {
 .type-scale-3 {
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  font-size: clamp(1rem, 2.4vw, 1.3rem);
   line-height: 1.45;
   margin: 0;
 }
 
-/* ---------- Header (Mobile-First: 2 řádky, nulový horizontální scroll) ---------- */
+/* ---------- Header (Mobile-First) ---------- */
 
 .site-header {
   position: sticky;
@@ -176,7 +186,6 @@ svg {
   border-left: var(--grid-border);
 }
 
-/* 4-sloupcová mřížka navigace pro palec na mobilu */
 .site-nav {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -187,7 +196,7 @@ svg {
   align-items: center;
   justify-content: center;
   gap: 0.25rem;
-  min-height: 42px;
+  min-height: 44px;
   padding: 0.4rem 0.25rem;
   font-size: 0.78rem;
   font-weight: 700;
@@ -200,6 +209,11 @@ svg {
   border-right: none;
 }
 
+.site-nav a.is-current {
+  background-color: var(--blue);
+  color: var(--burgundy);
+}
+
 .nav-num {
   display: none;
   font-family: var(--font-mono);
@@ -207,17 +221,17 @@ svg {
   font-size: 0.72rem;
 }
 
-/* ---------- Tlačítka (Touch-friendly min. 48px výška) ---------- */
+/* ---------- Tlačítka ---------- */
 
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 48px;
-  padding: 0.85rem 1.5rem;
+  padding: 0.85rem 1.4rem;
   font-family: var(--font-sans);
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border: var(--grid-border);
@@ -265,7 +279,21 @@ svg {
   color: var(--white);
 }
 
-/* ---------- Hero Sekce (Mobile-First) ---------- */
+/* ---------- Hero Sekce & Banner podstránek ---------- */
+
+.page-banner {
+  padding: 2rem 1.25rem;
+  border-bottom: var(--grid-border);
+  background-color: var(--white);
+}
+
+.banner-inner {
+  max-width: 820px;
+}
+
+.page-banner .type-scale-9 {
+  color: var(--orange);
+}
 
 .hero-grid {
   display: flex;
@@ -290,6 +318,7 @@ svg {
   letter-spacing: 0.06em;
   padding: 0.35rem 0.65rem;
   background-color: var(--blue);
+  color: var(--burgundy);
   border: 1px solid var(--burgundy);
   margin-bottom: 1.25rem;
 }
@@ -327,7 +356,7 @@ svg {
 }
 
 .hero-illustration {
-  width: min(260px, 72vw);
+  width: min(250px, 70vw);
   height: auto;
 }
 
@@ -373,7 +402,7 @@ svg {
   display: none;
 }
 
-/* ---------- Sekce (Mobile-First) ---------- */
+/* ---------- Sekce ---------- */
 
 .swiss-section {
   display: flex;
@@ -416,7 +445,7 @@ svg {
 
 .cube-figure-svg,
 .horse-silhouette {
-  display: none; /* Na mobilu schováno, aby nezabíralo vertikální prostor */
+  display: none;
 }
 
 .theme-blue {
@@ -433,7 +462,7 @@ svg {
   border-bottom-color: rgba(183, 210, 253, 0.25);
 }
 
-/* ---------- 01 / O festivalu ---------- */
+/* ---------- Pilíře & Rozcestník na podstránky ---------- */
 
 .intro-block {
   padding: 1.75rem 1.25rem;
@@ -453,10 +482,6 @@ svg {
 .pillar-card {
   padding: 1.5rem 1.25rem;
   border-bottom: var(--grid-border);
-}
-
-.pillar-card:last-child {
-  border-bottom: none;
 }
 
 .pillar-header {
@@ -490,7 +515,70 @@ svg {
   font-size: 0.95rem;
 }
 
-/* ---------- 02 / Program ---------- */
+/* Rozcestník na podstránky */
+.subpage-nav-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.subpage-card {
+  padding: 1.75rem 1.25rem;
+  border-bottom: var(--grid-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  background-color: var(--white);
+  transition: background-color 0.15s ease;
+}
+
+.subpage-card:last-child {
+  border-bottom: none;
+}
+
+.subpage-card.theme-blue {
+  background-color: var(--blue);
+}
+
+.subpage-card.theme-dark {
+  background-color: var(--burgundy);
+  color: var(--white);
+}
+
+.subpage-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--orange);
+  letter-spacing: 0.08em;
+}
+
+.subpage-main h3 {
+  font-weight: 700;
+  font-size: 1.35rem;
+  text-transform: uppercase;
+  margin: 0 0 0.35rem 0;
+}
+
+.subpage-main p {
+  margin: 0;
+  font-size: 0.92rem;
+  opacity: 0.88;
+}
+
+.subpage-arrow {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+.subpage-card.theme-blue .subpage-arrow {
+  color: var(--burgundy);
+}
+
+/* ---------- Program ---------- */
 
 .schedule-grid {
   display: flex;
@@ -506,9 +594,9 @@ svg {
 }
 
 .day-header {
-  padding: 1rem 1.25rem;
+  padding: 1.15rem 1.25rem;
   border-bottom: 1px solid var(--burgundy);
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: var(--blue);
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -535,8 +623,9 @@ svg {
 
 .schedule-list li {
   display: grid;
-  grid-template-columns: 64px 1fr;
-  padding: 0.85rem 1.25rem;
+  grid-template-columns: 92px 1fr;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
   border-bottom: 1px solid rgba(68, 15, 25, 0.2);
   font-size: 0.95rem;
   align-items: baseline;
@@ -550,14 +639,25 @@ svg {
   font-family: var(--font-mono);
   font-weight: 700;
   color: var(--rust);
-  font-size: 0.88rem;
+  font-size: 0.84rem;
+}
+
+.event-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
 }
 
 .schedule-list .event {
   font-weight: 700;
 }
 
-/* ---------- 03 / Informace ---------- */
+.event-sub {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+/* ---------- Informace ---------- */
 
 .info-grid {
   display: grid;
@@ -586,17 +686,17 @@ svg {
 .info-value {
   font-weight: 700;
   font-size: 1.35rem;
-  margin: 0 0 0.25rem 0;
+  margin: 0 0 0.35rem 0;
   text-transform: uppercase;
 }
 
 .info-sub {
   margin: 0;
-  font-size: 0.9rem;
-  opacity: 0.85;
+  font-size: 0.92rem;
+  opacity: 0.88;
 }
 
-/* ---------- 04 / Registrace (Optimalizováno pro mobilní klávesnice) ---------- */
+/* ---------- Registrace ---------- */
 
 .account-box {
   padding: 1.5rem 1.25rem 2.25rem;
@@ -664,7 +764,6 @@ svg {
   opacity: 0.75;
 }
 
-/* 16px (1rem) zabraňuje automatickému zoomování na iOS Safari */
 .form-row input,
 .form-row select,
 .form-row textarea {
@@ -717,7 +816,6 @@ svg {
   color: var(--blue);
 }
 
-/* Výsledek vyhledání registrace */
 .registration-result {
   margin-top: 1.5rem;
   padding: 1.25rem;
@@ -793,7 +891,7 @@ svg {
   word-break: break-word;
 }
 
-/* ---------- Footer (2 buňky, bez vizuálního stylu) ---------- */
+/* ---------- Footer ---------- */
 
 .site-footer {
   background-color: var(--paper);
@@ -836,7 +934,7 @@ svg {
 }
 
 /* ==========================================================
-   TABLET & DESKTOP UPGRADES (min-width: 768px a 1024px)
+   TABLET & DESKTOP (min-width: 768px a 1024px)
    ========================================================== */
 
 @media (min-width: 768px) {
@@ -895,6 +993,10 @@ svg {
 
   .nav-num {
     display: inline;
+  }
+
+  .page-banner {
+    padding: 3.5rem 3rem;
   }
 
   .hero-actions {
@@ -1054,7 +1156,7 @@ svg {
   .pillars-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    flex: 1;
+    border-bottom: var(--grid-border);
   }
 
   .pillar-card {
@@ -1064,6 +1166,21 @@ svg {
   }
 
   .pillar-card:last-child {
+    border-right: none;
+  }
+
+  .subpage-nav-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .subpage-card {
+    padding: 2.25rem 2rem;
+    border-bottom: none;
+    border-right: var(--grid-border);
+  }
+
+  .subpage-card:last-child {
     border-right: none;
   }
 
@@ -1087,7 +1204,7 @@ svg {
   }
 
   .schedule-list li {
-    padding: 1.1rem 2rem;
+    padding: 1.15rem 1.75rem;
   }
 
   .info-cell {
