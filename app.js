@@ -1,71 +1,8 @@
 /* ==========================================================
-   Brkvík — registrace napojená na Google Sheets (přes Apps Script)
+   Brkvík 2027 — registrace napojená na Google Sheets (Apps Script)
    ========================================================== */
 
-// Sem vlož URL Web Appky z Apps Scriptu (Deploy -> New deployment -> Web app),
-// musí končit na /exec. Viz README.md.
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzRhjR1nXjXWpbNvWWHzoctCRtiFwiCI0ABieGAIQW2VFTqWx5W9eZQZ7Mjij8sSog-Ig/exec";
-
-/* ---------- Generovaná grafika brka v hero sekci ---------- */
-
-function buildFeather() {
-  const svg = document.getElementById("feather-hero");
-  if (!svg) return;
-
-  const ns = "http://www.w3.org/2000/svg";
-  const cx = 400;
-  const top = 60;
-  const bottom = 860;
-  const barbCount = 34;
-
-  const shaft = document.createElementNS(ns, "path");
-  shaft.setAttribute(
-    "d",
-    `M ${cx} ${top} C ${cx + 30} ${top + 260}, ${cx - 20} ${bottom - 260}, ${cx} ${bottom}`
-  );
-  shaft.setAttribute("fill", "none");
-  shaft.setAttribute("stroke", "var(--amber)");
-  shaft.setAttribute("stroke-width", "2.5");
-  shaft.setAttribute("opacity", "0.7");
-  svg.appendChild(shaft);
-
-  for (let i = 0; i < barbCount; i++) {
-    const t = i / (barbCount - 1);
-    const y = top + t * (bottom - top);
-    const curveX = cx + Math.sin(t * Math.PI) * (t < 0.5 ? 20 : -14);
-    const spread = Math.sin(t * Math.PI);
-    const len = 40 + spread * 170;
-    const angle = 28 + t * 34;
-
-    [1, -1].forEach((side) => {
-      const rad = (angle * Math.PI) / 180;
-      const x2 = curveX + side * Math.cos(rad) * len;
-      const y2 = y - Math.sin(rad) * len * 0.35;
-
-      const barb = document.createElementNS(ns, "line");
-      barb.setAttribute("x1", curveX);
-      barb.setAttribute("y1", y);
-      barb.setAttribute("x2", x2);
-      barb.setAttribute("y2", y2);
-      barb.setAttribute("stroke", side === 1 ? "var(--cream)" : "var(--ember)");
-      barb.setAttribute("stroke-width", "1");
-      barb.setAttribute("opacity", 0.15 + spread * 0.35);
-      barb.style.transformOrigin = `${curveX}px ${y}px`;
-      barb.style.animation = `barb-sway ${4 + (i % 5)}s ease-in-out infinite`;
-      barb.style.animationDelay = `${(i % 7) * 0.3}s`;
-      svg.appendChild(barb);
-    });
-  }
-
-  const style = document.createElement("style");
-  style.textContent = `
-    @keyframes barb-sway {
-      0%, 100% { transform: rotate(0deg); }
-      50% { transform: rotate(1.2deg); }
-    }
-  `;
-  document.head.appendChild(style);
-}
 
 /* ---------- Přepínání záložek ---------- */
 
@@ -85,7 +22,8 @@ function initTabs() {
       const target = btn.dataset.tab;
       panels.forEach((p) => p.classList.toggle("is-active", p.dataset.panel === target));
 
-      document.getElementById("registration-result").hidden = true;
+      const resultBox = document.getElementById("registration-result");
+      if (resultBox) resultBox.hidden = true;
     });
   });
 }
@@ -95,7 +33,7 @@ function initTabs() {
 async function callBackend(action, params) {
   if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.startsWith("PASTE_")) {
     throw new Error(
-      "Appka ještě není napojená na Google Sheets — doplň APPS_SCRIPT_URL v app.js (viz README.md)."
+      "Aplikace zatím není propojena s databází — doplňte APPS_SCRIPT_URL v souboru app.js."
     );
   }
 
@@ -103,9 +41,6 @@ async function callBackend(action, params) {
   url.searchParams.set("action", action);
   Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value ?? ""));
 
-  // Používáme GET (ne POST), protože Apps Script Web Appky přesměrovávají
-  // odpověď a POST tělo by se při přesměrování ztratilo. GET s parametry
-  // v URL je pro tenhle účel spolehlivější a nepotřebuje CORS preflight.
   const res = await fetch(url.toString());
   return res.json();
 }
@@ -115,11 +50,13 @@ async function callBackend(action, params) {
 function initRegisterForm() {
   const form = document.getElementById("register-form");
   const msg = document.getElementById("register-msg");
+  if (!form) return;
   const submitBtn = form.querySelector("button[type=submit]");
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     msg.className = "form-msg";
+    msg.textContent = "Odesílám přihlášku…";
     submitBtn.disabled = true;
 
     const jmeno = form.jmeno.value.trim();
@@ -129,7 +66,7 @@ function initRegisterForm() {
     const poznamka = form.poznamka.value.trim();
 
     if (!jmeno || !email) {
-      msg.textContent = "Vyplň prosím jméno a e-mail.";
+      msg.textContent = "Vyplňte prosím jméno a e-mailovou adresu.";
       msg.classList.add("is-error");
       submitBtn.disabled = false;
       return;
@@ -142,12 +79,12 @@ function initRegisterForm() {
         msg.textContent = data.error;
         msg.classList.add("is-error");
       } else {
-        msg.textContent = "Registrace uložena — platební údaje ti přišly na e-mail.";
+        msg.textContent = "Registrace byla uložena. Platební údaje jsme odeslali na uvedený e-mail.";
         msg.classList.add("is-success");
         form.reset();
       }
     } catch (err) {
-      msg.textContent = err.message || "Nepodařilo se spojit se serverem. Zkus to prosím znovu.";
+      msg.textContent = err.message || "Spojení se serverem selhalo. Zkuste to prosím znovu.";
       msg.classList.add("is-error");
     } finally {
       submitBtn.disabled = false;
@@ -155,16 +92,18 @@ function initRegisterForm() {
   });
 }
 
-/* ---------- Vyhledání registrace ("přihlášení") ---------- */
+/* ---------- Vyhledání registrace ---------- */
 
 function initLookupForm() {
   const form = document.getElementById("lookup-form");
   const msg = document.getElementById("lookup-msg");
+  if (!form) return;
   const submitBtn = form.querySelector("button[type=submit]");
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     msg.className = "form-msg";
+    msg.textContent = "Vyhledávám…";
     submitBtn.disabled = true;
     document.getElementById("registration-result").hidden = true;
 
@@ -181,7 +120,7 @@ function initLookupForm() {
         showResult(data);
       }
     } catch (err) {
-      msg.textContent = err.message || "Nepodařilo se spojit se serverem. Zkus to prosím znovu.";
+      msg.textContent = err.message || "Spojení se serverem selhalo. Zkuste to prosím znovu.";
       msg.classList.add("is-error");
     } finally {
       submitBtn.disabled = false;
@@ -197,7 +136,7 @@ function showResult(entry) {
 
   const badge = document.getElementById("paid-badge");
   badge.className = `paid-badge ${entry.paid ? "is-paid" : "is-unpaid"}`;
-  badge.textContent = entry.paid ? "Zaplaceno" : "Čeká na platbu";
+  badge.textContent = entry.paid ? "Uhrazeno" : "Čeká na platbu";
 
   const rows = [
     ["Jméno", entry.jmeno],
@@ -225,13 +164,14 @@ function showResult(entry) {
 
 function initCancelRegistration() {
   const btn = document.getElementById("cancel-registration");
+  if (!btn) return;
 
   btn.addEventListener("click", async () => {
     const result = document.getElementById("registration-result");
     const email = result.dataset.email;
     if (!email) return;
 
-    if (!confirm("Opravdu chceš zrušit svou registraci na Brkvík?")) return;
+    if (!confirm("Opravdu si přejete zrušit svou registraci na festival Brkvík?")) return;
 
     btn.disabled = true;
     try {
@@ -241,21 +181,20 @@ function initCancelRegistration() {
       } else {
         result.hidden = true;
         const msg = document.getElementById("lookup-msg");
-        msg.textContent = "Registrace zrušena. Mrzí nás to — snad příště!";
+        msg.textContent = "Registrace byla úspěšně zrušena.";
         msg.className = "form-msg is-success";
       }
     } catch (err) {
-      alert(err.message || "Zrušení se nepodařilo, zkus to prosím znovu.");
+      alert(err.message || "Zrušení registrace se nezdařilo. Zkuste to prosím znovu.");
     } finally {
       btn.disabled = false;
     }
   });
 }
 
-/* ---------- Init ---------- */
+/* ---------- Inicializace ---------- */
 
 document.addEventListener("DOMContentLoaded", () => {
-  buildFeather();
   initTabs();
   initRegisterForm();
   initLookupForm();
