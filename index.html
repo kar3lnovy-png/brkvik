@@ -3,223 +3,396 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brkvík — brněnský skautský víkend</title>
-<meta name="description" content="Brkvík: brněnský skautský víkend plný přednášek, párty programu a legendární sobotní kalby.">
+<title>BRKVIK 2027 — Skautský festival v Brně</title>
+<meta name="description" content="Zveme vás na jedinečný skautský festival v Brně, který se uskuteční poslední víkend v květnu 2027. Součástí budou přednášky, koncerty a workshopy.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;600;800;900&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- Náhrada za HVD Rowdy (Rubik Mono One / Syne) a TheMix C5 (Plus Jakarta Sans) -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Rubik+Mono+One&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="quill-cursor-line" aria-hidden="true"></div>
-
 <header class="site-header">
-  <a href="#top" class="logo">
-    <svg class="logo-feather" viewBox="0 0 40 40" aria-hidden="true">
-      <path d="M20 2 C20 2 8 10 8 24 C8 32 13 38 20 38 C27 38 32 32 32 24 C32 10 20 2 20 2 Z" fill="none" stroke="currentColor" stroke-width="1.4"/>
-      <line x1="20" y1="4" x2="20" y2="37" stroke="currentColor" stroke-width="1.2"/>
+  <a href="#top" class="brand-lockup" aria-label="BRKVIK 2027">
+    <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="48" fill="#B7D2FD" stroke="#440F19" stroke-width="3"/>
+      <!-- Kůň -->
+      <path d="M22 57 L27 35 L73 21 L80 20 L74 23 L80 24 L76 26 L77 33 L73 35 L71 33 L70 27 L66 39 L65 80 L61 77 L62 46 L59 46 L59 82 L55 78 L56 46 L48 47 L45 55 L39 59 L38 80 L34 83 L35 58 L41 53 L43 46 L39 46 L38 54 L31 59 L32 82 L27 85 L28 57 L34 52 L35 35 L29 36 L26 53 Z" fill="#F4380A"/>
+      <!-- Jezdec -->
+      <path d="M39 22 C37 16 47 16 47 18 C47 20 44 20 44 21 L61 23 L63 22 L62 25 L60 27 L47 25 L48 28 L56 31 L45 32 L46 39 L40 48 L39 50 L37 45 L42 38 L42 32 L38 26 L39 33 L37 35 L35 33 L37 31 L35 24 L39 22 Z" fill="#440F19"/>
     </svg>
-    <span>Brkvík</span>
+    <div class="brand-text">
+      <span class="brand-title">BRKVIK</span>
+      <span class="brand-year">2027</span>
+    </div>
   </a>
+
   <nav class="site-nav">
-    <a href="#o-akci">O akci</a>
-    <a href="#program">Program</a>
-    <a href="#info">Info</a>
-    <a href="#ucet" class="nav-cta">Registrace</a>
+    <a href="#o-akci">01 / O festivalu</a>
+    <a href="#program">02 / Harmonogram</a>
+    <a href="#info">03 / Informace</a>
+    <a href="#ucet" class="nav-cta">04 / Registrace</a>
   </nav>
 </header>
 
 <main id="top">
 
-  <!-- HERO -->
-  <section class="hero">
-    <svg id="feather-hero" class="feather-hero" viewBox="0 0 800 900" aria-hidden="true"></svg>
-    <div class="hero-content">
-      <p class="eyebrow">Brněnský skautský víkend</p>
-      <h1 class="hero-title">BRKVÍK</h1>
-      <p class="hero-tagline">Nečum sem, ješště to není ready!,<br class="br-desktop"> o které se bude mluvit ještě dlouho po víkendu.</p>
-      <div class="hero-meta">
-        <span class="meta-item"><strong>TERMÍN</strong> doplnit datum</span>
-        <span class="meta-dot">·</span>
-        <span class="meta-item"><strong>MÍSTO</strong> Brno a okolí</span>
+  <!-- HERO SEKCE (SWISS POSTER GRID) -->
+  <section class="hero-grid">
+    <div class="hero-cell hero-main">
+      <div class="swiss-meta">
+        <span>ROČNÍK 2027</span>
+        <span>BRNO, CZ</span>
+        <span>28.–30. 05. 2027</span>
       </div>
+
+      <!-- Typografický poměr 9 : 4 : 3 dle manuálu -->
+      <h1 class="type-scale-9">BRKVIK 2027</h1>
+      <p class="type-scale-4">SKAUTSKÝ FESTIVAL</p>
+      <p class="type-scale-3 hero-lead">
+        Zveme vás na jedinečný skautský festival v Brně, který se uskuteční poslední víkend v květnu. Součástí budou přednášky, koncerty a workshopy.
+      </p>
+
       <div class="hero-actions">
-        <a href="#ucet" class="btn btn-primary">Chci se registrovat</a>
-        <a href="#program" class="btn btn-ghost">Zobrazit program</a>
+        <a href="#ucet" class="btn btn-primary">Registrovat se</a>
+        <a href="#program" class="btn btn-outline">Harmonogram</a>
+      </div>
+    </div>
+
+    <div class="hero-cell hero-visual">
+      <!-- Oficiální emblém: Jezdec na koni v kruhu (SVG) -->
+      <svg class="hero-illustration" viewBox="0 0 500 500" role="img" aria-label="Symbol festivalu Brkvík – jezdec na koni">
+        <circle cx="250" cy="250" r="230" fill="#B7D2FD"/>
+        <!-- Dlouhonohý červený kůň -->
+        <path d="M101 283 L133 170 L175 165 L193 158 L280 154 L318 105 L350 105 L398 97 L380 112 L400 115 L380 126 L386 164 L371 177 L355 168 L354 148 L348 135 L330 198 L328 404 L306 390 L310 230 L300 230 L297 412 L275 394 L283 230 L238 235 L225 278 L193 297 L193 402 L171 413 L174 289 L204 265 L218 228 L195 232 L190 272 L159 296 L160 412 L134 426 L139 286 L171 260 L173 175 L146 178 L132 266 Z" fill="#F4380A"/>
+        <!-- Tmavě hnědý jezdec -->
+        <path d="M196 112 C185 82 225 78 233 88 C238 94 220 98 220 104 L308 116 L317 109 L314 123 L303 134 L236 122 C233 128 238 139 243 142 L281 154 L225 160 L232 192 L203 237 L195 247 L186 225 L212 188 L209 160 L190 132 L195 165 L184 176 L173 168 L183 156 L173 120 L196 112 Z" fill="#440F19"/>
+      </svg>
+    </div>
+
+    <!-- Spodní informační lišta v Hero sekci -->
+    <div class="hero-cell hero-strip">
+      <div class="strip-item">
+        <span class="strip-label">TERMÍN</span>
+        <strong class="strip-val">Poslední víkend v květnu</strong>
+      </div>
+      <div class="strip-item">
+        <span class="strip-label">LOKACE</span>
+        <strong class="strip-val">Brno a okolí</strong>
+      </div>
+      <div class="strip-item">
+        <span class="strip-label">OBSAH</span>
+        <strong class="strip-val">Přednášky · Koncerty · Workshopy</strong>
+      </div>
+      <div class="strip-item strip-stack">
+        <!-- Skládané logo z manuálu -->
+        <div class="stacked-badge" aria-hidden="true">
+          <span>BRK</span>
+          <span>VIK</span>
+          <span class="accent">27</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- O AKCI -->
-  <section id="o-akci" class="section">
-    <div class="section-inner">
-      <p class="section-label">01 — O co jde</p>
-      <h2 class="section-title">Jeden víkend, jedno brko, spousta peří okolo.</h2>
-      <div class="about-grid">
-        <div class="about-card">
-          <span class="about-icon">◆</span>
+  <!-- 01 / O FESTIVALU -->
+  <section id="o-akci" class="swiss-section">
+    <div class="section-sidebar">
+      <span class="section-num">01</span>
+      <h2 class="section-heading">O FESTIVALU</h2>
+      <!-- Druhá ilustrace z manuálu: Postava s krychlí -->
+      <svg class="cube-figure-svg" viewBox="0 0 300 280" aria-hidden="true">
+        <!-- Tmavá postava -->
+        <path d="M78 58 L81 20 L118 8 C142 15 155 28 148 42 C142 52 124 54 122 59 L218 128 L208 160 L292 260 L256 262 L185 182 L175 135 L118 92 L138 140 L85 135 L70 92 L45 148 L78 190 L68 205 L42 185 L44 252 L8 262 L8 248 L22 245 L20 150 L22 135 L48 58 Z" fill="#440F19"/>
+        <!-- Oranžová krychle (plná přední stěna + drátěný model) -->
+        <polygon points="92,102 182,135 178,238 86,204" fill="#F4380A"/>
+        <g stroke="#F4380A" stroke-width="2.5" fill="none">
+          <polygon points="48,135 138,168 134,265 44,232"/>
+          <line x1="92" y1="102" x2="48" y2="135"/>
+          <line x1="182" y1="135" x2="138" y2="168"/>
+          <line x1="178" y1="238" x2="134" y2="265"/>
+          <line x1="86" y1="204" x2="44" y2="232"/>
+        </g>
+        <!-- Ruce přes krychli -->
+        <path d="M50 150 L80 185 L70 202 L42 178 Z" fill="#440F19"/>
+        <path d="M198 142 L162 204 C158 218 178 228 190 212 L212 155 Z" fill="#440F19"/>
+      </svg>
+    </div>
+
+    <div class="section-content">
+      <div class="intro-block">
+        <p class="type-scale-4">TŘI DNY INSPIRACE A SETKÁVÁNÍ</p>
+        <p class="type-scale-3">
+          Brkvík propojuje skautskou komunitu napříč republikou. Vytváříme prostor pro sdílení zkušeností, debaty s odborníky, praktické dílny a kulturu v kulisách města Brna.
+        </p>
+      </div>
+
+      <div class="pillars-grid">
+        <article class="pillar-card">
+          <div class="pillar-header">
+            <span class="pillar-index">01.1</span>
+            <svg class="pillar-icon" viewBox="0 0 32 32" aria-hidden="true">
+              <circle cx="16" cy="16" r="12" fill="#B7D2FD"/>
+              <circle cx="22" cy="22" r="7" fill="#B52705"/>
+            </svg>
+          </div>
           <h3>Přednášky</h3>
-          <p>Bloky, které dávají smysl i mimo klubovnu — od dovedností, které se hodí na výpravě, po témata, o kterých normálně nepřemýšlíte.</p>
+          <p>Tematické bloky s důrazem na přesah mimo oddílovou praxi — od společenských témat a vědy až po osobní rozvoj a metodiku.</p>
+        </article>
+
+        <article class="pillar-card">
+          <div class="pillar-header">
+            <span class="pillar-index">01.2</span>
+            <svg class="pillar-icon" viewBox="0 0 32 32" aria-hidden="true">
+              <rect x="4" y="4" width="24" height="24" fill="#F4380A"/>
+            </svg>
+          </div>
+          <h3>Workshopy</h3>
+          <p>Praktické dílny, diskusní stoly a doprovodné aktivity v menších skupinách. Prostor vyzkoušet si nové přístupy a řemesla přímo na místě.</p>
+        </article>
+
+        <article class="pillar-card">
+          <div class="pillar-header">
+            <span class="pillar-index">01.3</span>
+            <svg class="pillar-icon" viewBox="0 0 32 32" aria-hidden="true">
+              <circle cx="16" cy="16" r="13" fill="#440F19"/>
+            </svg>
+          </div>
+          <h3>Koncerty a večer</h3>
+          <p>Sobotní večer patří živé hudbě, autorským vystoupením a neformálnímu setkávání účastníků u otevřeného ohně.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 / HARMONOGRAM -->
+  <section id="program" class="swiss-section theme-blue">
+    <div class="section-sidebar">
+      <span class="section-num">02</span>
+      <h2 class="section-heading">PROGRAM</h2>
+      <p class="sidebar-note">Předběžná časová osa festivalu. Detailní rozpis jednotlivých bloků a řečníků zveřejníme před akcí.</p>
+    </div>
+
+    <div class="section-content">
+      <div class="schedule-grid">
+        <div class="schedule-col">
+          <div class="day-header">
+            <span class="day-num">DEN 01</span>
+            <h3 class="day-title">PÁTEK</h3>
+          </div>
+          <ul class="schedule-list">
+            <li>
+              <span class="time">17:00</span>
+              <span class="event">Příjezd účastníků a akreditace</span>
+            </li>
+            <li>
+              <span class="time">19:00</span>
+              <span class="event">Oficiální zahájení festivalu</span>
+            </li>
+            <li>
+              <span class="time">20:30</span>
+              <span class="event">Seznamovací blok a večerní program</span>
+            </li>
+          </ul>
         </div>
-        <div class="about-card">
-          <span class="about-icon">◆</span>
-          <h3>Doprovodný program</h3>
-          <p>Celý víkend se něco děje — hry, dílny a aktivity mezi bloky, aby ani chvíle nebyla ztracená.</p>
+
+        <div class="schedule-col">
+          <div class="day-header">
+            <span class="day-num">DEN 02</span>
+            <h3 class="day-title">SOBOTA</h3>
+          </div>
+          <ul class="schedule-list">
+            <li>
+              <span class="time">08:30</span>
+              <span class="event">Společná snídaně</span>
+            </li>
+            <li>
+              <span class="time">10:00</span>
+              <span class="event">Přednáškový blok I &amp; workshopy</span>
+            </li>
+            <li>
+              <span class="time">13:00</span>
+              <span class="event">Obědová pauza a odpolední aktivity</span>
+            </li>
+            <li>
+              <span class="time">15:00</span>
+              <span class="event">Přednáškový blok II</span>
+            </li>
+            <li>
+              <span class="time">18:30</span>
+              <span class="event">Večeře</span>
+            </li>
+            <li>
+              <span class="time">20:00</span>
+              <span class="event">Večerní koncerty a hudební program</span>
+            </li>
+          </ul>
         </div>
-        <div class="about-card">
-          <span class="about-icon">◆</span>
-          <h3>Legendární kalba</h3>
-          <p>Sobotní večer patří ohni, kytaře a partě lidí, která si Brkvík nenechá ujít už podruhé.</p>
+
+        <div class="schedule-col">
+          <div class="day-header">
+            <span class="day-num">DEN 03</span>
+            <h3 class="day-title">NEDĚLE</h3>
+          </div>
+          <ul class="schedule-list">
+            <li>
+              <span class="time">09:00</span>
+              <span class="event">Snídaně a balení</span>
+            </li>
+            <li>
+              <span class="time">10:30</span>
+              <span class="event">Závěrečná debata a ohlédnutí</span>
+            </li>
+            <li>
+              <span class="time">12:00</span>
+              <span class="event">Ukončení festivalu a odjezd</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PROGRAM -->
-  <section id="program" class="section section-alt">
-    <div class="section-inner">
-      <p class="section-label">02 — Program</p>
-      <h2 class="section-title">Předběžný harmonogram</h2>
-      <p class="section-note">Přesné časy upřesníme blíž k akci — tohle je nástin, jak víkend bude vypadat.</p>
-
-      <div class="schedule">
-        <div class="schedule-day">
-          <h3 class="day-label">Pátek</h3>
-          <ul class="schedule-list">
-            <li><span class="time">17:00</span><span class="event">Příjezd a registrace na místě</span></li>
-            <li><span class="time">19:00</span><span class="event">Zahájení a seznamovací program</span></li>
-            <li><span class="time">21:00</span><span class="event">Večerní posezení</span></li>
-          </ul>
-        </div>
-        <div class="schedule-day">
-          <h3 class="day-label">Sobota</h3>
-          <ul class="schedule-list">
-            <li><span class="time">09:00</span><span class="event">Snídaně</span></li>
-            <li><span class="time">10:00</span><span class="event">Přednáškový blok I</span></li>
-            <li><span class="time">13:00</span><span class="event">Oběd + doprovodný program</span></li>
-            <li><span class="time">15:00</span><span class="event">Přednáškový blok II</span></li>
-            <li><span class="time">19:00</span><span class="event">Večeře</span></li>
-            <li><span class="time">20:30</span><span class="event">Legendární kalba</span></li>
-          </ul>
-        </div>
-        <div class="schedule-day">
-          <h3 class="day-label">Neděle</h3>
-          <ul class="schedule-list">
-            <li><span class="time">09:00</span><span class="event">Snídaně</span></li>
-            <li><span class="time">10:30</span><span class="event">Závěrečný blok</span></li>
-            <li><span class="time">12:00</span><span class="event">Rozloučení a odjezd</span></li>
-          </ul>
-        </div>
-      </div>
+  <!-- 03 / PRAKTICKÉ INFORMACE -->
+  <section id="info" class="swiss-section">
+    <div class="section-sidebar">
+      <span class="section-num">03</span>
+      <h2 class="section-heading">INFORMACE</h2>
+      <!-- Silueta koně z manuálu -->
+      <svg class="horse-silhouette" viewBox="0 0 300 300" aria-hidden="true">
+        <path d="M40 165 L65 85 L180 75 L205 20 L230 20 L270 12 L255 24 L272 26 L255 34 L260 64 L248 74 L235 66 L232 45 L218 95 L215 260 L198 250 L200 125 L192 125 L190 268 L172 254 L178 125 L142 128 L132 162 L106 178 L106 258 L88 268 L90 170 L114 152 L125 122 L106 125 L102 158 L78 176 L78 268 L58 278 L62 168 L88 148 L90 88 L68 90 L58 155 Z" fill="#B7D2FD"/>
+      </svg>
     </div>
-  </section>
 
-  <!-- INFO -->
-  <section id="info" class="section">
-    <div class="section-inner">
-      <p class="section-label">03 — Praktické info</p>
-      <h2 class="section-title">Co si zapamatovat</h2>
+    <div class="section-content">
       <div class="info-grid">
-        <div class="info-card">
-          <p class="info-key">Termín</p>
-          <p class="info-value">doplnit datum</p>
+        <div class="info-cell">
+          <span class="info-label">03.1 / TERMÍN</span>
+          <p class="info-value">28.–30. května 2027</p>
+          <p class="info-sub">Poslední víkend v květnu (pátek až neděle)</p>
         </div>
-        <div class="info-card">
-          <p class="info-key">Místo</p>
-          <p class="info-value">doplnit lokaci</p>
+        <div class="info-cell">
+          <span class="info-label">03.2 / MÍSTO KONÁNÍ</span>
+          <p class="info-value">Brno</p>
+          <p class="info-sub">Přesnou lokaci areálu obdrží registrovaní účastníci e-mailem</p>
         </div>
-        <div class="info-card">
-          <p class="info-key">Cena</p>
-          <p class="info-value">doplnit částku</p>
+        <div class="info-cell">
+          <span class="info-label">03.3 / ÚČASTNICKÝ POPLATEK</span>
+          <p class="info-value">Bude upřesněno</p>
+          <p class="info-sub">Zahrnuje program, ubytování a stravu po dobu akce</p>
         </div>
-        <div class="info-card">
-          <p class="info-key">S sebou</p>
-          <p class="info-value">spacák, karimatka, dobrá nálada</p>
+        <div class="info-cell">
+          <span class="info-label">03.4 / VYBAVENÍ S SEBOU</span>
+          <p class="info-value">Spacák a karimatka</p>
+          <p class="info-sub">Zápisník na přednášky, ešus a oblečení dle počasí</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ÚČET / REGISTRACE + PŘIHLÁŠENÍ -->
-  <section id="ucet" class="section section-account">
-    <div class="section-inner section-inner-narrow">
-      <p class="section-label">04 — Registrace</p>
-      <h2 class="section-title">Přihlas se na Brkvík</h2>
-      <p class="section-note">Vyplň registraci níž. Svoje údaje pak kdykoliv najdeš zpátky přes svůj e-mail — žádné heslo si nemusíš pamatovat.</p>
+  <!-- 04 / REGISTRACE -->
+  <section id="ucet" class="swiss-section theme-dark">
+    <div class="section-sidebar">
+      <span class="section-num">04</span>
+      <h2 class="section-heading">REGISTRACE</h2>
+      <p class="sidebar-note">
+        Po odeslání formuláře vám zašleme platební údaje. Stav své přihlášky můžete kdykoliv zkontrolovat zadáním e-mailu.
+      </p>
+    </div>
 
-      <div class="account-card">
+    <div class="section-content">
+      <div class="account-box">
         <div class="tabs" role="tablist">
           <button class="tab-btn is-active" data-tab="register" role="tab" aria-selected="true">Nová registrace</button>
-          <button class="tab-btn" data-tab="lookup" role="tab" aria-selected="false">Najít svou registraci</button>
+          <button class="tab-btn" data-tab="lookup" role="tab" aria-selected="false">Správa registrace</button>
         </div>
 
-        <!-- REGISTRACE -->
+        <!-- FORMULÁŘ: NOVÁ REGISTRACE -->
         <form id="register-form" class="tab-panel is-active" data-panel="register" novalidate>
-          <div class="form-row">
-            <label for="reg-jmeno">Jméno a příjmení</label>
-            <input type="text" id="reg-jmeno" name="jmeno" required placeholder="Jana Nováková">
+          <div class="form-grid">
+            <div class="form-row">
+              <label for="reg-jmeno">Jméno a příjmení / přezdívka *</label>
+              <input type="text" id="reg-jmeno" name="jmeno" required placeholder="Jana Nováková">
+            </div>
+            <div class="form-row">
+              <label for="reg-email">E-mailová adresa *</label>
+              <input type="email" id="reg-email" name="email" required placeholder="jana@skaut.cz">
+            </div>
+            <div class="form-row">
+              <label for="reg-oddil">Oddíl / středisko <span class="opt">(nepovinné)</span></label>
+              <input type="text" id="reg-oddil" name="oddil" placeholder="např. 6. středisko Brno">
+            </div>
+            <div class="form-row">
+              <label for="reg-tricko">Festivalové tričko</label>
+              <select id="reg-tricko" name="tricko">
+                <option value="">Bez trička</option>
+                <option>XS</option>
+                <option>S</option>
+                <option>M</option>
+                <option>L</option>
+                <option>XL</option>
+                <option>XXL</option>
+              </select>
+            </div>
           </div>
+
           <div class="form-row">
-            <label for="reg-email">E-mail</label>
-            <input type="email" id="reg-email" name="email" required placeholder="jana@example.com">
+            <label for="reg-poznamka">Stravovací omezení a poznámky <span class="opt">(alergie, dieta, dotazy)</span></label>
+            <textarea id="reg-poznamka" name="poznamka" rows="3" placeholder="Vegetarián, bezlepková dieta…"></textarea>
           </div>
-          <div class="form-row">
-            <label for="reg-oddil">Oddíl / středisko <span class="opt">(nepovinné)</span></label>
-            <input type="text" id="reg-oddil" name="oddil" placeholder="např. 6. středisko Bobři Brno">
-          </div>
-          <div class="form-row">
-            <label for="reg-tricko">Velikost trička</label>
-            <select id="reg-tricko" name="tricko">
-              <option value="">Nevím / nechci tričko</option>
-              <option>XS</option><option>S</option><option>M</option>
-              <option>L</option><option>XL</option><option>XXL</option>
-            </select>
-          </div>
-          <div class="form-row">
-            <label for="reg-poznamka">Poznámka <span class="opt">(alergie, dieta, cokoliv)</span></label>
-            <textarea id="reg-poznamka" name="poznamka" rows="3" placeholder="Např. vegetarián, alergie na ořechy…"></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">Odeslat registraci</button>
+
+          <button type="submit" class="btn btn-primary btn-block">Odeslat přihlášku</button>
           <p class="form-msg" id="register-msg" role="status"></p>
         </form>
 
-        <!-- LOOKUP / "PŘIHLÁŠENÍ" -->
+        <!-- FORMULÁŘ: VYHLEDÁNÍ REGISTRACE -->
         <form id="lookup-form" class="tab-panel" data-panel="lookup" novalidate>
           <div class="form-row">
-            <label for="lookup-email">E-mail, se kterým ses registroval/a</label>
-            <input type="email" id="lookup-email" name="email" required placeholder="jana@example.com">
+            <label for="lookup-email">Zadejte e-mail uvedený při registraci</label>
+            <input type="email" id="lookup-email" name="email" required placeholder="jana@skaut.cz">
           </div>
-          <button type="submit" class="btn btn-primary btn-block">Najít registraci</button>
+          <button type="submit" class="btn btn-primary btn-block">Vyhledat přihlášku</button>
           <p class="form-msg" id="lookup-msg" role="status"></p>
         </form>
 
-        <!-- VÝSLEDEK -->
+        <!-- VÝSLEDEK VYHLEDÁNÍ -->
         <div id="registration-result" class="registration-result" hidden>
           <div class="result-header">
             <span class="result-icon">✓</span>
-            <h3>Registrace nalezena</h3>
+            <h3>Záznam o registraci</h3>
+            <span class="paid-badge" id="paid-badge"></span>
           </div>
-          <span class="paid-badge" id="paid-badge"></span>
           <dl class="result-list" id="result-list"></dl>
           <div class="result-actions">
-            <button id="cancel-registration" class="btn btn-ghost btn-danger" type="button">Zrušit registraci</button>
+            <button id="cancel-registration" class="btn btn-outline btn-danger" type="button">Zrušit registraci</button>
           </div>
         </div>
+      </div>
+    </div>
   </section>
 
 </main>
 
 <footer class="site-footer">
-  <div class="footer-inner">
-    <div class="logo footer-logo">
-      <svg class="logo-feather" viewBox="0 0 40 40" aria-hidden="true">
-        <path d="M20 2 C20 2 8 10 8 24 C8 32 13 38 20 38 C27 38 32 32 32 24 C32 10 20 2 20 2 Z" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <line x1="20" y1="4" x2="20" y2="37" stroke="currentColor" stroke-width="1.2"/>
-      </svg>
-      <span>Brkvík</span>
+  <div class="footer-grid">
+    <div class="footer-cell">
+      <span class="footer-title">BRKVIK 2027</span>
+      <p>Skautský festival v Brně</p>
     </div>
-    <p class="footer-text">Brněnský skautský víkend · doplnit kontaktní e-mail</p>
+    <div class="footer-cell">
+      <span class="footer-label">KONTAKT</span>
+      <p>info@brkvik.cz</p>
+    </div>
+    <div class="footer-cell">
+      <span class="footer-label">VIZUÁLNÍ STYL</span>
+      <div class="color-dots" aria-hidden="true">
+        <span class="dot" style="background:#B7D2FD"></span>
+        <span class="dot" style="background:#B52705"></span>
+        <span class="dot" style="background:#F4380A"></span>
+        <span class="dot" style="background:#440F19"></span>
+      </div>
+    </div>
   </div>
 </footer>
 
