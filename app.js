@@ -1,102 +1,127 @@
 /* ==========================================================
-   Brkvík 2027 — hlídač registrace (Google Apps Script)
+   Brkvík 2027 — hlídač registrace
    ========================================================== */
 
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzRhjR1nXjXWpbNvWWHzoctCRtiFwiCI0ABieGAIQW2VFTqWx5W9eZQZ7Mjij8sSog-Ig/exec";
+const REQUEST_TIMEOUT_MS = 25000;
 
-/* ---------- Volání backendu (Apps Script Web App) ---------- */
+function setMsg(el, text, type) {
+  if (!el) return;
+  el.textContent = text;
+  el.className = "form-msg" + (type ? " is-" + type : "");
+}
+
+function isEmailLike(s) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s);
+}
+
+// Jakákoli neošetřená chyba se ukáže pod tlačítkem
+window.addEventListener("error", (e) => {
+  setMsg(document.getElementById("watch-msg"), "Chyba skriptu: " + e.message, "error");
+});
+window.addEventListener("unhandledrejection", (e) => {
+  setMsg(document.getElementById("watch-msg"), "Chyba: " + ((e.reason && e.reason.message) || e.reason), "error");
+});
 
 async function callBackend(action, params) {
-  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.startsWith("PASTE_")) {
-    throw new Error(
-      "Aplikace zatím není propojena s databází — doplňte APPS_SCRIPT_URL v souboru app.js."
-    );
-  }
-
   const url = new URL(APPS_SCRIPT_URL);
   url.searchParams.set("action", action);
-  Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value ?? ""));
+  Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v == null ? "" : v));
 
-  const res = await fetch(url.toString());
-  return res.json();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+  try {
+    const res = await fetch(url.toString(), { signal: controller.signal, redirect: "follow" });
+    const text = await res.text();
+    try {
+      return JSON.parse(text);
+    } catch (e) {
+      console.error("Neplatná odpověď serveru:", text.slice(0, 300));
+      throw new Error("Server vrátil neočekávanou odpověď (zkontrolujte nasazení Apps Scriptu).");
+    }
+  } catch (err) {
+    if (err && err.name === "AbortError") throw new Error("Server neodpověděl včas. Zkuste to znovu.");
+    if (err instanceof TypeError) throw new Error("Spojení se serverem selhalo (síť nebo nastavení přístupu k Apps Scriptu).");
+    throw err;
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
-/* ---------- Hlídač registrace ---------- */
-
-function initWatchForm() {
+async function handleWatchSubmit() {
   const form = document.getElementById("watch-form");
   const msg = document.getElementById("watch-msg");
-  if (!form) return;
-  const submitBtn = form.querySelector("button[type=submit]");
+  const btn = document.getElementById("w-submit");
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    msg.className = "form-msg";
+  setMsg(msg, "Kontroluji…", "");
 
-    const jmeno = form.jmeno.value.trim();
-    const email = form.email.value.trim();
+  try {
+    const jmeno = (document.getElementById("w-jmeno").value || "").trim();
+    const email = (document.getElementById("w-email").value || "").trim();
+    const souhlas = document.getElementById("w-souhlas").checked;
+    const honeypot = (document.getElementById("w-web").value || "").trim();
 
-    if (!jmeno || !email) {
-      msg.textContent = "Vyplňte prosím jméno a e-mail.";
-      msg.classList.add("is-error");
-      return;
+    if (!jmeno || !email) return setMsg(msg, "Vyplňte prosím jméno a e-mail.", "error");
+    if (!isEmailLike(email)) return setMsg(msg, "Zadejte prosím platný e-mail.", "error");
+    if (!souhlas) return setMsg(msg, "Potvrďte prosím souhlas se zasláním upozornění.", "error");
+    if (honeypot) return setMsg(msg, "Hotovo! Dáme vám vědět, jakmile se registrace spustí.", "success");
+
+    if (btn) btn.disabled = true;
+    setMsg(msg, "Ukládám…", "");
+
+    const data = await callBackend("watch", { jmeno, email });
+
+    if (data && data.error) {
+      setMsg(msg, data.error, "error");
+    } else if (data && data.ok) {
+      setMsg(msg, "Hotovo! Dáme vám vědět, jakmile se registrace spustí.", "success");
+      if (form) form.reset();
+    } else {
+      setMsg(msg, "Server vrátil neočekávanou odpověď. Zkuste to později.", "error");
     }
- if (!form.elements["souhlas"].checked) {
-      msg.textContent = "Potvrďte prosím souhlas se zasláním upozornění.";
-      msg.classList.add("is-error");
-      return;
-    }
-    if (form.web.value) return; // honeypot vyplnil bot
-
-    msg.textContent = "Ukládám…";
-    submitBtn.disabled = true;
-
-    try {
-      const data = await callBackend("watch", { jmeno, email });
-      if (data.error) {
-        msg.textContent = data.error;
-        msg.classList.add("is-error");
-      } else {
-        msg.textContent = "Hotovo! Dáme vám vědět, jakmile se registrace spustí.";
-        msg.classList.add("is-success");
-        form.reset();
-      }
-    } catch (err) {
-      msg.textContent = err.message || "Spojení se serverem selhalo. Zkuste to prosím znovu.";
-      msg.classList.add("is-error");
-    } finally {
-      submitBtn.disabled = false;
-    }
-  });
+  } catch (err) {
+    console.error(err);
+    setMsg(msg, (err && err.message) || "Něco se nepovedlo. Zkuste to znovu.", "error");
+  } finally {
+    if (btn) btn.disabled = false;
+  }
 }
 
-/* ---------- Odhlášení z hlídání (odkaz z e-mailu: registrace?odhlasit=TOKEN) ---------- */
+// Odeslání formuláře (Enter i klik) – zachyceno globálně
+document.addEventListener("submit", (e) => {
+  if (e.target && e.target.id === "watch-form") {
+    e.preventDefault();
+    handleWatchSubmit();
+  }
+});
+
+// Pojistka: přímo i na klik tlačítka
+document.addEventListener("click", (e) => {
+  const b = e.target && e.target.closest && e.target.closest("#w-submit");
+  if (b) {
+    e.preventDefault();
+    handleWatchSubmit();
+  }
+});
 
 async function initUnsubscribe() {
   const token = new URLSearchParams(location.search).get("odhlasit");
   if (!token) return;
 
   const msg = document.getElementById("unsub-msg");
-  if (!msg) return;
-  msg.textContent = "Odhlašuji…";
+  setMsg(msg, "Odhlašuji…", "");
   try {
     const data = await callBackend("unsubscribe", { token });
-    if (data.error) {
-      msg.textContent = data.error;
-      msg.className = "form-msg is-error";
-    } else {
-      msg.textContent = "Odhlášeno. Už vám nic nepošleme a údaje jsme smazali.";
-      msg.className = "form-msg is-success";
-    }
+    if (data && data.error) setMsg(msg, data.error, "error");
+    else setMsg(msg, "Odhlášeno. Už vám nic nepošleme a údaje jsme smazali.", "success");
   } catch (err) {
-    msg.textContent = err.message || "Odhlášení se nezdařilo. Zkuste to prosím znovu.";
-    msg.className = "form-msg is-error";
+    setMsg(msg, (err && err.message) || "Odhlášení se nezdařilo.", "error");
   }
 }
 
-/* ---------- Inicializace ---------- */
-
-document.addEventListener("DOMContentLoaded", () => {
-  initWatchForm();
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initUnsubscribe);
+} else {
   initUnsubscribe();
-});
+}
