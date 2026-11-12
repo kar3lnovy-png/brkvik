@@ -1215,3 +1215,36 @@ svg {
     padding: 2.75rem 3rem;
   }
 }
+/* Souhlas (checkbox) */
+.consent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.consent-row input[type="checkbox"] {
+  -webkit-appearance: checkbox;
+  appearance: checkbox;
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  margin: 2px 0 0;
+  padding: 0;
+  cursor: pointer;
+  accent-color: #F4380A;
+  position: static;
+  opacity: 1;
+}
+
+.consent-row label {
+  display: block;
+  flex: 1;
+  margin: 0;
+  cursor: pointer;
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
