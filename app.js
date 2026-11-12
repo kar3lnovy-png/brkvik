@@ -41,7 +41,7 @@ function initWatchForm() {
       msg.classList.add("is-error");
       return;
     }
-    if (!form.souhlas.checked) {
+ if (!form.elements["souhlas"].checked) {
       msg.textContent = "Potvrďte prosím souhlas se zasláním upozornění.";
       msg.classList.add("is-error");
       return;
